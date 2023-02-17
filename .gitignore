@@ -4,8 +4,11 @@
 /.env.local.php
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
+/config/packages
 /public/bundles/
 /var/
+/mysql-data
+/rabbit-mq-data
 /vendor/
 ###< symfony/framework-bundle ###
 

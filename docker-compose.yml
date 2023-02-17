@@ -1,0 +1,43 @@
+version: "3"
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: newsparse_rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    volumes:
+      - ./rabbitmq-data:/var/lib/rabbitmq
+
+  mysql:
+    image: mysql:8
+    container_name: newsparse_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: esyvprog
+      MYSQL_DATABASE: news_parse_db
+      MYSQL_USER: parse_admin
+      MYSQL_PASSWORD: esyvpluk
+    ports:
+      - "3360:3306"
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+
+  # web:
+  #   build: .
+  #   container_name: newsparse_web
+  #   depends_on:
+  #     - rabbitmq
+  #     - mysql
+  #   ports:
+  #     - "8000:8000"
+  #   volumes:
+  #     - .:/var/www/html
+  #   environment:
+  #     APP_ENV: dev
+  #     APP_SECRET: 253fa11c614ebd25f87dee84dbd15eba
+  #     DATABASE_URL: mysql://parse_admin:esyvpluk@mysql/news_parse_db
+  #     RABBITMQ_HOST: rabbitmq
+  #     RABBITMQ_PORT: 5672
+  #     RABBITMQ_USER: guest
+  #     RABBITMQ_PASSWORD: key123
+  #     RABBITMQ_QUEUE_NAME: parse_queue
