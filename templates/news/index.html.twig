@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}News{% endblock %}
+
+{% block body %}
+    <h1>News</h1>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Short Description</th>
+                <th>Picture</th>
+                <th>Date Added</th>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <th></th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for article in news %}
+                <tr>
+                    <td>{{ article.title }}</td>
+                    <td>{{ article.shortDescription }}</td>
+                    <td><img src="{{ article.picture }}" alt="{{ article.title }}" width="100"></td>
+                    <td>{{ article.dateAdded|date('Y-m-d H:i:s') }}</td>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <td><a href="{{ path('news_delete', {'id': article.id}) }}" class="btn btn-danger btn-sm">Delete</a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="text-center">
+        {{ knp_pagination_render(news) }}
+    </div>
+{% endblock %}
